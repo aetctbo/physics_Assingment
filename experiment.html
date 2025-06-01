@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LED Characteristics Experiment</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+   
+<style>
+    /* Improved readability styles */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+    }
+    
+    .card-body {
+        font-size: 1rem;
+        color: #444;
+    }
+    
+    h1, h2, h3 {
+        color: #2c3e50;
+        font-weight: 600;
+    }
+    
+    .table-container {
+        background-color: #fff;
+        overflow-x: auto;
+    }
+    
+    .led-3d::before {
+        background: radial-gradient(circle at center, 
+            hsl(calc(var(--hue, 195) + 30), 80%, 60%) 0%, 
+            hsl(var(--hue, 195), 80%, 50%) 70%);
+    }
+    
+    /* Improved graph container */
+    .graph-container {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        height: 400px;
+    }
+    
+    /* Better input fields */
+    .input-field {
+        background: #f8f9fa;
+        border: 1px solid #ddd;
+        padding: 10px;
+        border-radius: 4px;
+        width: 100%;
+        font-size: 1rem;
+    }
+    
+    .input-group {
+        margin-bottom: 15px;
+    }
+    
+    .input-panel {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .input-panel > div {
+        flex: 1;
+        min-width: 200px;
+    }
+    
+    /* Responsive table */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    th, td {
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+    
+    th {
+        background-color: #4361ee;
+        color: white;
+    }
+    
+    tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+    
+    /* Button styles */
+    .btn {
+        padding: 10px 15px;
+        border-radius: 4px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary {
+        background-color: #4361ee;
+        color: white;
+        border: none;
+    }
+    
+    .btn-primary:hover {
+        background-color: #3a56d4;
+    }
+    
+    .btn-danger {
+        background-color: #f72585;
+        color: white;
+        border: none;
+    }
+    
+    .btn-danger:hover {
+        background-color: #e5177b;
+    }
+    
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+        border: none;
+    }
+    
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+    
+    .btn-icon {
+        margin-right: 5px;
+    }
+    
+    /* Alert styles */
+    .alert {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px;
+        border-radius: 4px;
+        color: white;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+    }
+    
+    .alert-success {
+        background-color: #43aa8b;
+    }
+    
+    .alert-error {
+        background-color: #f72585;
+    }
+    
+    .alert-warning {
+        background-color: #f8961e;
+    }
+    
+    .alert-info {
+        background-color: #4cc9f0;
+    }
+    
+    .fade-out {
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+</style>
+</head>
+<body>
+    <div class="science-background"></div>
+    <div class="particles-container"></div>
+    
+    <div class="logo-container">
+        <div class="logo-inner">
+            <h2>SHALL GROUP OF INSTITUTIONS</h2>
+            <h2>INDORE INSTITUTE OF SCIENCE & TECHNOLOGY</h2>
+            <h3>DEPARTMENT OF ENGINEERING PHYSICS</h3>
+        </div>
+    </div>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="index.html">Submission</a></li>
+            <li><a href="experiment.html" class="active">Experiment</a></li>
+            <li><a href="#" class="nav-download">Download Report</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-container">
+        <div class="experiment-header">
+            <h1 class="title-animation">Experiment No. 7</h1>
+            <h2 class="subtitle-animation">To study the characteristics of Light Emitting Diode (LED)</h2>
+        </div>
+
+        <div class="experiment-grid">
+            <!-- Apparatus Section -->
+            <section class="card apparatus-section">
+                <div class="card-header">
+                    <h3>Apparatus Required</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="apparatus-list">
+                        <li><span class="icon">⚡</span> Trainer board</li>
+                        <li><span class="icon">🔌</span> Connecting leads</li>
+                        <li><span class="icon">🔋</span> Power supply</li>
+                        <li><span class="icon">💡</span> LED samples</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Theory Section -->
+            <section class="card theory-section">
+                <div class="card-header">
+                    <h3>Principal and Theory</h3>
+                </div>
+                <div class="card-body">
+                    <p>The light emitting diode (LED) is a solid state source. LED's have replaced incandescent lamps in many applications because they have the following advantages:</p>
+                    <ul class="theory-list">
+                        <li><strong>Low voltage</strong> operation</li>
+                        <li><strong>Long life</strong> (more than two years)</li>
+                        <li><strong>Fast ON-OFF switching</strong> (nanoseconds)</li>
+                    </ul>
+                    <p>In a forward biased rectifier diode, free electrons and holes recombine at a junction. When a free electron falls into a hole, it drops from a higher energy level to lower energy level.</p>
+                    <div class="theory-expand">
+                        <input type="checkbox" id="theory-toggle" class="expand-toggle">
+                        <label for="theory-toggle" class="expand-btn">Read More <span>▼</span></label>
+                        <div class="expand-content">
+                            <p>A LED is different to begin with, semi-transparent material are used instead of silicon. In forward-biased LED heat and light again are radiated when free electron and hole recombine at the junction because the material is semi-transparent some of the light escapes to the surroundings.</p>
+                            <p>By using elements like gallium, arsenic and phosphorus, a manufacturer can produce LEDs that radiate red, green and yellow amber of infrared (invisible) light. LED that produce visible radiations are used in instrument displays like calculators, digital clocks, etc.</p>
+                            <p>2.5V for currents between 10mA to 50mA. Incidentally, LED has low reverse voltage rating of 3V. This mean accidentally applying a reverse voltage greater than 3V may destroy or damage the LED characteristics.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Procedure Section -->
+            <section class="card procedure-section">
+                <div class="card-header">
+                    <h3>Procedure</h3>
+                </div>
+                <div class="card-body">
+                    <ol class="procedure-steps">
+                        <li>Connect the circuit as shown by the dotted lines in fig.(1) through patch chords.</li>
+                        <li>Switch ON the instrument using ON/OFF toggle switch provided on the front panel.</li>
+                        <li>Vary the input voltage in small steps and note down the observations.</li>
+                    </ol>
+                    <div class="circuit-diagram">
+                        <div class="placeholder-diagram">
+                            <div class="led-symbol"></div>
+                            <div class="circuit-lines"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Observation Section -->
+            <section class="card observation-section">
+                <div class="card-header">
+                    <h3>Observation Table</h3>
+                </div>
+                <div class="card-body">
+                    <div class="input-panel">
+                        <div class="input-group">
+                            <label for="voltage"><span class="input-icon">🔋</span> Voltage (V)</label>
+                            <input type="number" id="voltage" step="0.1" min="0" max="5" class="input-field" placeholder="Enter voltage (0-5V)">
+                        </div>
+                        <div class="input-group">
+                            <label for="current"><span class="input-icon">⚡</span> Current (mA)</label>
+                            <input type="number" id="current" step="0.1" min="0" max="100" class="input-field" placeholder="Enter current (0-100mA)">
+                        </div>
+                    </div>
+                    
+                    <div class="input-panel">
+                        <button id="addData" class="btn btn-primary">
+                            <span class="btn-icon">➕</span> Add Data Point
+                        </button>
+                        <button id="autoPlot" class="btn btn-secondary">
+                            <span class="btn-icon">⚡</span> Auto Plot Sample Data
+                        </button>
+                        <button id="clearData" class="btn btn-danger">
+                            <span class="btn-icon">🗑️</span> Clear All Data
+                        </button>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="observationTable">
+                            <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>LED Voltage (V)</th>
+                                    <th>LED Current (mA)</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Graph Section -->
+            <section class="card graph-section">
+                <div class="card-header">
+                    <h3>I-V Characteristics Graph</h3>
+                </div>
+                <div class="card-body">
+                    <div class="graph-container">
+                        <canvas id="ledChart"></canvas>
+                    </div>
+                    <div class="graph-controls">
+                        <button id="exportGraph" class="btn btn-secondary">
+                            <span class="btn-icon">📊</span> Export Graph
+                        </button>
+                        <div class="graph-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Threshold Voltage:</span>
+                                <span id="thresholdVoltage" class="stat-value">-- V</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Max Current:</span>
+                                <span id="maxCurrent" class="stat-value">-- mA</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Result Section -->
+            <section class="card result-section">
+                <div class="card-header">
+                    <h3>Result</h3>
+                </div>
+                <div class="card-body">
+                    <div class="result-content">
+                        <p id="resultText">The curve shows the desired characteristics.</p>
+                        <div class="result-animation">
+                            <div class="led-animation"></div>
+                            <div class="led-glow"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Precautions Section -->
+            <section class="card precautions-section">
+                <div class="card-header">
+                    <h3>Precautions</h3>
+                </div>
+                <div class="card-body">
+                    <ol class="precaution-list">
+                        <li>All connections should be tight.</li>
+                        <li>Readings should be noted very carefully.</li>
+                        <li>Do not exceed the maximum current rating.</li>
+                        <li>Ensure proper polarity when connecting the LED.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Viva Section -->
+            <section class="card viva-section">
+                <div class="card-header">
+                    <h3>Viva-Voice</h3>
+                </div>
+                <div class="card-body">
+                    <div class="viva-questions">
+                        <div class="question-item">
+                            <div class="question">What is LED?</div>
+                            <button class="btn-answer">Show Answer</button>
+                            <div class="answer">A Light Emitting Diode (LED) is a semiconductor device that emits light when an electric current passes through it.</div>
+                        </div>
+                        <div class="question-item">
+                            <div class="question">How it is formed?</div>
+                            <button class="btn-answer">Show Answer</button>
+                            <div class="answer">LEDs are formed by doping semiconductor materials to create a p-n junction.</div>
+                        </div>
+                        <div class="question-item">
+                            <div class="question">Why it emits light of different colours?</div>
+                            <button class="btn-answer">Show Answer</button>
+                            <div class="answer">Different semiconductor materials and doping produce different band gaps, resulting in different light wavelengths (colors).</div>
+                        </div>
+                        <div class="question-item">
+                            <div class="question">What is the difference between an LED, PN Diode?</div>
+                            <button class="btn-answer">Show Answer</button>
+                            <div class="answer">LEDs are designed to emit light, while regular PN diodes are optimized for rectification. LEDs use different semiconductor materials.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer class="experiment-footer">
+            <div class="footer-content">
+                <p>Engineering Physics Lab Manual - Page 37 & 55</p>
+                <p>© 2023 Indore Institute of Science & Technology</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Initialize Chart
+        const ctx = document.getElementById('ledChart').getContext('2d');
+        const ledChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'LED Current (mA)',
+                    data: [],
+                    borderColor: '#4361ee',
+                    backgroundColor: 'rgba(67, 97, 238, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.3,
+                    pointBackgroundColor: '#f72585',
+                    pointRadius: 5,
+                    pointHoverRadius: 7,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Voltage (V)',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Current (mA)',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: {
+                                size: 14
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `Voltage: ${context.parsed.x}V, Current: ${context.parsed.y}mA`;
+                            }
+                        }
+                    }
+                },
+                animation: {
+                    duration: 1000,
+                    easing: 'easeOutQuart'
+                }
+            }
+        });
+
+        // Data Management
+        let observations = [];
+        let counter = 1;
+        const voltageInput = document.getElementById('voltage');
+        const currentInput = document.getElementById('current');
+        const addDataBtn = document.getElementById('addData');
+        const clearDataBtn = document.getElementById('clearData');
+        const autoPlotBtn = document.getElementById('autoPlot');
+        const observationTable = document.querySelector('#observationTable tbody');
+        const resultText = document.getElementById('resultText');
+        const thresholdVoltage = document.getElementById('thresholdVoltage');
+        const maxCurrent = document.getElementById('maxCurrent');
+
+        // Add Data
+        addDataBtn.addEventListener('click', () => {
+            const voltage = parseFloat(voltageInput.value);
+            const current = parseFloat(currentInput.value);
+            
+            if (isNaN(voltage) || isNaN(current)) {
+                showAlert('Please enter valid numbers for both voltage and current', 'error');
+                return;
+            }
+            
+            if (voltage < 0 || voltage > 5) {
+                showAlert('Voltage must be between 0V and 5V', 'error');
+                return;
+            }
+            
+            if (current < 0 || current > 100) {
+                showAlert('Current must be between 0mA and 100mA', 'error');
+                return;
+            }
+            
+            const newObservation = {
+                id: counter++,
+                voltage,
+                current
+            };
+            
+            observations.push(newObservation);
+            addTableRow(newObservation);
+            updateChart();
+            updateStats();
+            
+            // Clear inputs
+            voltageInput.value = '';
+            currentInput.value = '';
+            
+            // Focus on voltage for next entry
+            voltageInput.focus();
+            
+            // Show success animation
+            animateSuccess();
+        });
+
+        // Auto Plot Sample Data
+        autoPlotBtn.addEventListener('click', () => {
+            const sampleData = [
+                { voltage: 0.0, current: 0.0 },
+                { voltage: 1.0, current: 0.0 },
+                { voltage: 1.5, current: 0.1 },
+                { voltage: 1.8, current: 0.5 },
+                { voltage: 2.0, current: 2.0 },
+                { voltage: 2.1, current: 5.0 },
+
+            ];
+            
+            // Clear existing data
+            observations = [];
+            counter = 1;
+            observationTable.innerHTML = '';
+            
+            // Add sample data points with animation
+            let i = 0;
+            const interval = setInterval(() => {
+                if (i < sampleData.length) {
+                    const newObservation = {
+                        id: counter++,
+                        voltage: sampleData[i].voltage,
+                        current: sampleData[i].current
+                    };
+                    observations.push(newObservation);
+                    addTableRow(newObservation);
+                    updateChart();
+                    updateStats();
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    showAlert('Sample data plotted successfully', 'success');
+                }
+            }, 300);
+        });
+
+        // Clear Data
+        clearDataBtn.addEventListener('click', () => {
+            if (observations.length === 0) {
+                showAlert('No data to clear', 'warning');
+                return;
+            }
+            
+            if (confirm('Are you sure you want to clear all data?')) {
+                observations = [];
+                counter = 1;
+                observationTable.innerHTML = '';
+                updateChart();
+                updateStats();
+                resultText.textContent = 'The curve shows the desired characteristics.';
+                showAlert('All data cleared', 'success');
+            }
+        });
+
+        // Delete Row
+        observationTable.addEventListener('click', (e) => {
+            if (e.target.classList.contains('btn-delete')) {
+                const row = e.target.closest('tr');
+                const id = parseInt(row.dataset.id);
+                
+                observations = observations.filter(obs => obs.id !== id);
+                row.remove();
+                updateChart();
+                updateStats();
+                
+                if (observations.length === 0) {
+                    resultText.textContent = 'The curve shows the desired characteristics.';
+                }
+                
+                showAlert('Data point removed', 'info');
+            }
+        });
+
+        // Export Graph
+        document.getElementById('exportGraph').addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.download = 'LED-Characteristics.png';
+            link.href = document.getElementById('ledChart').toDataURL('image/png');
+            link.click();
+            showAlert('Graph exported successfully', 'success');
+        });
+
+        // Show Answer buttons
+        document.querySelectorAll('.btn-answer').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const answer = this.nextElementSibling;
+                answer.classList.toggle('show');
+                this.textContent = answer.classList.contains('show') ? 'Hide Answer' : 'Show Answer';
+            });
+        });
+
+        // Helper Functions
+        function addTableRow(obs) {
+            const row = document.createElement('tr');
+            row.dataset.id = obs.id;
+            row.innerHTML = `
+                <td>${obs.id}</td>
+                <td>${obs.voltage.toFixed(2)}</td>
+                <td>${obs.current.toFixed(2)}</td>
+                <td>
+                    <button class="btn-delete">
+                        <span class="btn-icon">❌</span> Delete
+                    </button>
+                </td>
+            `;
+            observationTable.appendChild(row);
+            
+            // Add animation
+            row.style.animation = 'fadeIn 0.5s ease-out';
+        }
+
+        function updateChart() {
+            // Sort observations by voltage
+            observations.sort((a, b) => a.voltage - b.voltage);
+            
+            ledChart.data.labels = observations.map(obs => obs.voltage.toFixed(2));
+            ledChart.data.datasets[0].data = observations.map(obs => ({
+                x: obs.voltage,
+                y: obs.current
+            }));
+            ledChart.update();
+            
+            // Update result text
+            if (observations.length >= 3) {
+                resultText.innerHTML = `
+                    The I-V curve shows characteristic LED behavior with ${observations.length} data points.
+                    <span class="highlight">Threshold voltage ≈ ${calculateThreshold().toFixed(2)}V</span>
+                `;
+            }
+        }
+
+        function updateStats() {
+            if (observations.length === 0) {
+                thresholdVoltage.textContent = '-- V';
+                maxCurrent.textContent = '-- mA';
+                return;
+            }
+            
+            // Calculate threshold voltage (where current starts increasing rapidly)
+            const threshold = calculateThreshold();
+            thresholdVoltage.textContent = `${threshold.toFixed(2)} V`;
+            
+            // Find max current
+            const max = Math.max(...observations.map(obs => obs.current));
+            maxCurrent.textContent = `${max.toFixed(2)} mA`;
+        }
+
+        function calculateThreshold() {
+            if (observations.length < 3) return 0;
+            
+            // Simple threshold calculation (find where slope increases)
+            const sorted = [...observations].sort((a, b) => a.voltage - b.voltage);
+            let maxSlope = 0;
+            let threshold = 0;
+            
+            for (let i = 1; i < sorted.length; i++) {
+                const slope = (sorted[i].current - sorted[i-1].current) / (sorted[i].voltage - sorted[i-1].voltage);
+                if (slope > maxSlope) {
+                    maxSlope = slope;
+                    threshold = sorted[i].voltage;
+                }
+            }
+            
+            return threshold;
+        }
+
+        function showAlert(message, type) {
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.innerHTML = `
+                <span class="btn-icon">${type === 'success' ? '✓' : type === 'error' ? '⚠️' : 'ℹ️'}</span>
+                ${message}
+            `;
+            document.body.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.classList.add('fade-out');
+                setTimeout(() => alert.remove(), 500);
+            }, 3000);
+        }
+
+        function animateSuccess() {
+            const success = document.createElement('div');
+            success.className = 'success-animation';
+            success.innerHTML = '✓ Data Added';
+            document.body.appendChild(success);
+            
+            setTimeout(() => {
+                success.classList.add('fade-out');
+                setTimeout(() => success.remove(), 500);
+            }, 2000);
+        }
+
+        // Initial animations
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animate cards
+            anime({
+                targets: '.card',
+                translateY: [20, 0],
+                opacity: [0, 1],
+                duration: 800,
+                delay: anime.stagger(100),
+                easing: 'easeOutExpo'
+            });
+            
+            // Particle animation
+            createParticles();
+        });
+
+        function createParticles() {
+            const container = document.querySelector('.particles-container');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random properties
+                const size = Math.random() * 5 + 2;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 10 + 10;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                
+                container.appendChild(particle);
+            }
+        }
+    </script>
+</body>
+</html>

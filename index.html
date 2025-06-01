@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LED Characteristics Experiment - Submission</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Additional styles for index page */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .submission-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .section {
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+        }
+        
+        .group-members {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .member {
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .member:hover {
+            background-color: #e9ecef;
+            transform: translateY(-3px);
+        }
+        
+        .graph-placeholder {
+            height: 300px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+        
+        .sample-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .sample-table th, .sample-table td {
+            padding: 0.75rem;
+            text-align: center;
+            border: 1px solid #dee2e6;
+        }
+        
+        .sample-table th {
+            background-color: #4361ee;
+            color: white;
+        }
+        
+        .sample-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            color: #6c757d;
+        }
+        
+        /* Animation for the title */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .title-animated {
+            animation: fadeIn 1s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="science-background"></div>
+    <div class="particles-container"></div>
+    
+    <div class="logo-container">
+        <div class="logo-inner">
+            <h2>SHALL GROUP OF INSTITUTIONS</h2>
+            <h2>INDORE INSTITUTE OF SCIENCE & TECHNOLOGY</h2>
+            <h3>DEPARTMENT OF ENGINEERING PHYSICS</h3>
+        </div>
+    </div>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="index.html" class="active">Submission</a></li>
+            <li><a href="experiment.html">Experiment</a></li>
+            <li><a href="#" class="nav-download">Download Report</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="submission-container">
+            <header>
+                <h1 class="title-animated">Experiment Submission</h1>
+            </header>
+
+            <div class="section">
+                <h2>Experiment Details</h2>
+                <table>
+                    <tr>
+                        <td><strong>SUBJECT:</strong></td>
+                        <td>Engineering Physics</td>
+                        <td><strong>SUBJECT CODE:</strong></td>
+                        <td>BE-201</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Year:</strong></td>
+                        <td>1 Year</td>
+                        <td><strong>Year / Sem:</strong></td>
+                        <td>1 Year / I & II Sem</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Experiment No.:</strong></td>
+                        <td>7</td>
+                        <td><strong>Experiment Name:</strong></td>
+                        <td>Characteristics of Light Emitting Diode (LED)</td>
+                    </tr>
+                </table>
+            </div>
+
+          
+            <div class="section">
+                <h2>Submitted By</h2>
+                <div class="group-members">
+                    <div class="member">Krish Makhija</div>
+                    <div class="member">Krishnapal singh Panwar</div>
+                    <div class="member">Krishna Karma</div>
+                    <div class="member">Krish Gujar</div>
+                    <div class="member">Krishnaraj sing sisodiya</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Submitted To</h2>
+                <div>Irfan Mansuri</div>
+                <p>Department of Engineering Physics<br>
+                Indore Institute of Science and Technology</p>
+            </div>
+
+            <div class="footer">
+                <p>Engineering Physics Lab Manual</p>
+                <p>© 2023 Indore Institute of Science & Technology</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+      
+
+        // Start animation after a short delay
+        setTimeout(animateChart, 1000);
+
+        // Theme toggle functionality
+        const themeToggle = document.createElement('div');
+        themeToggle.className = 'theme-toggle';
+        themeToggle.innerHTML = `
+            <label class="switch">
+                <input type="checkbox" id="themeToggle">
+                <span class="slider"></span>
+            </label>
+        `;
+        document.body.appendChild(themeToggle);
+
+        document.getElementById('themeToggle').addEventListener('change', function() {
+            document.documentElement.setAttribute('data-theme', this.checked ? 'dark' : 'light');
+        });
+    </script>
+</body>
+</html>
