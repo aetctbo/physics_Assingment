@@ -7,6 +7,106 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+         
+        /* Existing styles... */
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem 0.5rem;
+            }
+            
+            .submission-container {
+                padding: 1rem;
+                border-radius: 12px;
+            }
+            
+            .section {
+                padding: 1rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .group-members {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            
+            .member {
+                padding: 0.75rem;
+            }
+            
+            table {
+                width: 100%;
+                display: block;
+                overflow-x: auto;
+            }
+            
+            table tr {
+                display: flex;
+                flex-wrap: wrap;
+            }
+            
+            table td, table th {
+                flex: 1 0 45%;
+                padding: 0.5rem;
+                box-sizing: border-box;
+                min-width: 120px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            h2 {
+                font-size: 1.25rem;
+            }
+            
+            .logo-container h2 {
+                font-size: 1rem;
+            }
+            
+            .logo-container h3 {
+                font-size: 0.9rem;
+            }
+            
+            .main-nav ul {
+                flex-direction: column;
+                padding: 0.5rem;
+            }
+            
+            .main-nav li {
+                margin: 0.25rem 0;
+            }
+            
+            .graph-placeholder {
+                height: 200px;
+            }
+        }
+
+        /* For very small screens (below 480px) */
+        @media (max-width: 480px) {
+            .submission-container {
+                padding: 0.75rem;
+            }
+            
+            .section {
+                padding: 0.75rem;
+            }
+            
+            table td, table th {
+                flex: 1 0 100%;
+            }
+            
+            .logo-inner {
+                padding: 0.5rem;
+            }
+            
+            .logo-container h2 {
+                font-size: 0.9rem;
+                margin: 0.25rem 0;
+            }
+        }
+
         /* Additional styles for index page */
         .container {
             max-width: 1200px;
